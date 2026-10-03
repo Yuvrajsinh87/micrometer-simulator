@@ -1,435 +1,428 @@
-
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>માઇક્રોમીટર સિમ્યુલેટર - Yuvrajsinh Kosamia</title>
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body {
-            background-color: #f0f3f8;
-            margin: 0;
-            padding: 12px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            background: #ffffff;
-            border-radius: 16px;
-            max-width: 500px;
-            width: 100%;
-            padding: 18px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border: 1px solid #e1e8ed;
-        }
-        .author-badge {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: #ffffff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.12);
-        }
-        .title {
-            margin: 0 0 4px 0;
-            font-size: 20px;
-            color: #1a202c;
-            text-align: center;
-            font-weight: 700;
-        }
-        .subtitle {
-            text-align: center;
-            color: #718096;
-            font-size: 13px;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        
-        .mode-tabs {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 15px;
-            background: #edf2f7;
-            padding: 4px;
-            border-radius: 10px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            background: transparent;
-            border-radius: 7px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            color: #4a5568;
-            transition: all 0.2s;
-        }
-        .tab-btn.active {
-            background: #ffffff;
-            color: #2b6cb0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-        }
-
-        .canvas-card {
-            background: #ffffff;
-            border: 1px solid #cbd5e0;
-            border-radius: 12px;
-            padding: 8px;
-            text-align: center;
-        }
-
-        canvas {
-            width: 100%;
-            height: auto;
-            max-height: 200px;
-            display: block;
-        }
-
-        .result-box {
-            background: #f7fafc;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid #3182ce;
-        }
-        .result-title { font-size: 15px; font-weight: 600; color: #4a5568; }
-        .result-val { font-size: 28px; font-weight: 800; color: #2b6cb0; }
-
-        .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        .action-btn {
-            padding: 10px 4px;
-            border: 1px solid #cbd5e0;
-            background: #ffffff;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            color: #2d3748;
-            transition: background 0.15s;
-        }
-        .action-btn:active { background: #e2e8f0; }
-        .action-btn.reset { background: #fff5f5; color: #e53e3e; border-color: #feb2b2; }
-
-        .slider-container { margin: 15px 0 5px 0; }
-        .range-slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #cbd5e0;
-            outline: none;
-            accent-color: #3182ce;
-            cursor: pointer;
-        }
-
-        .calc-breakdown {
-            background: #edf2f7;
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 13px;
-        }
-        .calc-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px dashed #cbd5e0;
-        }
-        .calc-row:last-child { border-bottom: none; font-weight: bold; }
-        .dot-blue { color: #2b6cb0; font-weight: bold; }
-        .dot-orange { color: #dd6b20; font-weight: bold; }
-        .dot-red { color: #e53e3e; font-weight: bold; }
-
-        .footer-note {
-            text-align: center;
-            font-size: 11px;
-            color: #a0aec0;
-            margin-top: 15px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>આઉટસાઇડ માઇક્રોમીટર સિમ્યુલેટર</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 20px;
+    }
+    .header {
+      background-color: #1a2b3c;
+      color: #ffffff;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .title-section {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .title-section h1 {
+      font-size: 20px;
+      color: #1a2b3c;
+    }
+    .title-section p {
+      font-size: 13px;
+      color: #7f8c8d;
+    }
+    .nav-tabs {
+      display: flex;
+      background: #f0f3f6;
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 15px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #555;
+    }
+    .tab.active {
+      background: #ffffff;
+      color: #1a2b3c;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .simulator-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      background: #fff;
+      margin-bottom: 15px;
+    }
+    canvas {
+      width: 100%;
+      height: 180px;
+      background: #ffffff;
+    }
+    .result-box {
+      background: #f0f7ff;
+      border-left: 5px solid #2563eb;
+      border-radius: 8px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    .result-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #1e293b;
+    }
+    .result-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1d4ed8;
+    }
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px 0;
+      font-weight: bold;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:active {
+      background: #e2e8f0;
+    }
+    .slider-container {
+      margin-bottom: 15px;
+    }
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #cbd5e1;
+      outline: none;
+      accent-color: #2563eb;
+    }
+    .reset-btn {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+    .formula-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid #f1f5f9;
+    }
+    .formula-title {
+      font-weight: bold;
+      color: #334155;
+      margin-bottom: 12px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .formula-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #475569;
+    }
+    .formula-row span.label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dot-blue { color: #2563eb; }
+    .dot-orange { color: #ea580c; }
+    .dot-red { color: #dc2626; }
+    .calc-sum {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      font-weight: bold;
+      color: #1d4ed8;
+      font-size: 13px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- Header -->
+  <div class="header">
+    ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
+  </div>
+
+  <!-- Title -->
+  <div class="title-section">
+    <h1>આઉટસાઇડ માઇક્રોમીટર (0–25 mm)</h1>
+    <p>ચોક્કસ સ્કેલ વાંચન અને પ્રાયોગિક સિમ્યુલેટર (LC: 0.01 mm)</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="nav-tabs">
+    <div class="tab active">📘 શીખો</div>
+    <div class="tab">🎯 ટેસ્ટ લેબ</div>
+  </div>
+
+  <!-- Canvas Simulator Card -->
+  <div class="simulator-card">
+    <canvas id="micrometerCanvas" width="400" height="180"></canvas>
+  </div>
+
+  <!-- Total Reading Display -->
+  <div class="result-box">
+    <span class="result-title">કુલ રીડિંગ:</span>
+    <span class="result-value" id="totalReading">0.00 mm</span>
+  </div>
+
+  <!-- Adjustment Buttons -->
+  <div class="btn-grid">
+    <button class="btn" onclick="adjustValue(-0.50)">-0.50</button>
+    <button class="btn" onclick="adjustValue(-0.01)">-0.01</button>
+    <button class="btn" onclick="adjustValue(0.01)">+0.01</button>
+    <button class="btn" onclick="adjustValue(0.50)">+0.50</button>
+  </div>
+
+  <!-- Range Slider -->
+  <div class="slider-container">
+    <input type="range" id="micrometerSlider" class="slider" min="0" max="25" step="0.01" value="0.00">
+  </div>
+
+  <!-- Reset Button -->
+  <button class="reset-btn" onclick="resetValue()">↺ 0.00 સેટ કરો</button>
+
+  <!-- Formula Breakdown -->
+  <div class="formula-card">
+    <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
     
-    <div class="author-badge">
-        ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
+    <div class="formula-row">
+      <span class="label"><strong class="dot-blue">■</strong> Main Scale (સ્લીવ પર છેલ્લો mm):</span>
+      <span id="msrVal">0.00 mm</span>
+    </div>
+    <div class="formula-row">
+      <span class="label"><strong class="dot-orange">■</strong> Sub Scale (અડધો 0.50 mm દેખાય છે?):</span>
+      <span id="ssrVal">0.00 mm</span>
+    </div>
+    <div class="formula-row">
+      <span class="label"><strong class="dot-red">■</strong> Thimble Scale (ડિવિઝન × 0.01 mm):</span>
+      <span id="thimbleVal">0.00 mm</span>
     </div>
 
-    <h2 class="title">આઉટસાઇડ માઇક્રોમીટર (0–25 mm)</h2>
-    <p class="subtitle">ચોક્કસ સ્કેલ વાંચન અને પ્રાયોગિક સિમ્યુલેટર (LC: 0.01 mm)</p>
+    <div class="calc-sum" id="sumFormula">
+      સરવાળો (MSR + SSR + TR): 0 + 0.00 + 0.00 = 0.00 mm
+    </div>
+  </div>
 
-    <div class="mode-tabs">
-        <button class="tab-btn active" id="btnLearn" onclick="setMode('learn')">📘 શીખો</button>
-        <button class="tab-btn" id="btnTest" onclick="setMode('test')">🎯 ટેસ્ટ લેબ</button>
-    </div>
-
-    <!-- HIGH PRECISION CANVAS CANVAS -->
-    <div class="canvas-card">
-        <canvas id="micrometerCanvas" width="550" height="200"></canvas>
-    </div>
-
-    <!-- READING DISPLAY -->
-    <div class="result-box">
-        <span class="result-title">કુલ રીડિંગ:</span>
-        <span class="result-val" id="valTotal">25.00 mm</span>
-    </div>
-
-    <!-- ACTION BUTTONS -->
-    <div class="btn-grid">
-        <button class="action-btn" onclick="adjustValue(-0.50)">-0.50</button>
-        <button class="action-btn" onclick="adjustValue(-0.01)">-0.01</button>
-        <button class="action-btn" onclick="adjustValue(+0.01)">+0.01</button>
-        <button class="action-btn" onclick="adjustValue(+0.50)">+0.50</button>
-    </div>
-
-    <!-- SLIDER -->
-    <div class="slider-container">
-        <input type="range" id="micrometerSlider" class="range-slider" min="0" max="25" step="0.01" value="25.00" oninput="updateFromSlider(this.value)">
-    </div>
-    
-    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-        <button class="action-btn reset" style="padding: 6px 12px; font-size: 12px;" onclick="resetZero()">↺ 0.00 સેટ કરો</button>
-        <button class="action-btn" id="randBtn" style="padding: 6px 12px; font-size: 12px; display:none;" onclick="generateRandom()">🎲 રેન્ડમ પ્રશ્ન આપો</button>
-    </div>
-
-    <!-- BREAKDOWN CARD -->
-    <div class="calc-breakdown" id="breakdownCard">
-        <div style="font-weight: 700; color: #2d3748; margin-bottom: 8px;">📊 રીડિંગ ગણતરી (Formula):</div>
-        <div class="calc-row">
-            <span><span class="dot-blue">■</span> Main Scale (સ્લીવ પર છેલ્લો mm):</span>
-            <span id="valMain">25.00 mm</span>
-        </div>
-        <div class="calc-row">
-            <span><span class="dot-orange">■</span> Sub Scale (અડધો 0.50 mm દેખાય છે?):</span>
-            <span id="valSub">0.00 mm</span>
-        </div>
-        <div class="calc-row">
-            <span><span class="dot-red">■</span> Thimble Scale (ડિવિઝન × 0.01 mm):</span>
-            <span id="valThimble">0.00 mm</span>
-        </div>
-        <div class="calc-row" style="color: #2b6cb0; font-size: 14px;">
-            <span>સરવાળો (MSR + SSR + TR):</span>
-            <span id="valCalcFormula">25 + 0.00 + 0.00 = 25.00 mm</span>
-        </div>
-    </div>
-
-    <div class="footer-note">
-        ITI Ankleshwar | Mechanical Engineering Workshop Simulator
-    </div>
+  <div class="footer">
+    ITI Ankleshwar | Mechanical Engineering Workshop Simulator
+  </div>
 </div>
 
 <script>
-    let currentValue = 25.00;
-    let mode = 'learn';
+  const canvas = document.getElementById('micrometerCanvas');
+  const ctx = canvas.getContext('2d');
+  const slider = document.getElementById('micrometerSlider');
 
-    const canvas = document.getElementById('micrometerCanvas');
-    const ctx = canvas.getContext('2d');
+  let currentValue = 0.00;
 
-    const pxPerMM = 12;      // 1 mm = 12 pixels
-    const sleeveZeroX = 35;  // X coordinate of 0 mm mark
+  function updateReading(val) {
+    currentValue = Math.min(Math.max(parseFloat(val), 0), 25);
+    slider.value = currentValue.toFixed(2);
 
-    function setMode(m) {
-        mode = m;
-        document.getElementById('btnLearn').classList.toggle('active', mode === 'learn');
-        document.getElementById('btnTest').classList.toggle('active', mode === 'test');
-        
-        if (mode === 'learn') {
-            document.getElementById('randBtn').style.display = 'none';
-            document.getElementById('breakdownCard').style.display = 'block';
-            document.getElementById('valTotal').style.filter = 'none';
-        } else {
-            document.getElementById('randBtn').style.display = 'block';
-            generateRandom();
+    // Calculations
+    const msr = Math.floor(currentValue); // Main Scale Reading
+    const ssr = (currentValue - msr >= 0.50) ? 0.50 : 0.00; // Sub Scale
+    const thimble = parseFloat((currentValue - msr - ssr).toFixed(2)); // Thimble Division
+
+    // UI Updates
+    document.getElementById('totalReading').innerText = currentValue.toFixed(2) + " mm";
+    document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
+    document.getElementById('ssrVal').innerText = ssr.toFixed(2) + " mm";
+    document.getElementById('thimbleVal').innerText = thimble.toFixed(2) + " mm";
+    
+    document.getElementById('sumFormula').innerText = 
+      `સરવાળો (MSR + SSR + TR): ${msr} + ${ssr.toFixed(2)} + ${thimble.toFixed(2)} = ${currentValue.toFixed(2)} mm`;
+
+    drawMicrometer();
+  }
+
+  function adjustValue(delta) {
+    updateReading(currentValue + delta);
+  }
+
+  function resetValue() {
+    updateReading(0.00);
+  }
+
+  slider.addEventListener('input', (e) => {
+    updateReading(e.target.value);
+  });
+
+  function drawMicrometer() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const startX = 30;
+    const sleeveY = 90;
+    const sleeveHeight = 50;
+    const scaleFactor = 9; // Pixels per mm
+
+    // Sleeve Body
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillRect(startX, sleeveY - sleeveHeight/2, 250, sleeveHeight);
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(startX, sleeveY - sleeveHeight/2, 250, sleeveHeight);
+
+    // Main Reference Datum Line
+    ctx.beginPath();
+    ctx.moveTo(startX, sleeveY);
+    ctx.lineTo(startX + 250, sleeveY);
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Draw Main Scale & Sub Scale Markings
+    for (let i = 0; i <= 25; i++) {
+      let x = startX + (i * scaleFactor);
+
+      // Main mm lines (Upper)
+      ctx.beginPath();
+      ctx.moveTo(x, sleeveY);
+      ctx.lineTo(x, sleeveY - (i % 5 === 0 ? 18 : 12));
+      ctx.strokeStyle = '#1e293b';
+      ctx.stroke();
+
+      // Numbers on upper scale
+      if (i % 5 === 0) {
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '10px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(i, x, sleeveY - 22);
+      }
+
+      // 0.5 mm lines (Lower - Red/Orange tint)
+      if (i < 25) {
+        let subX = x + (scaleFactor / 2);
+        ctx.beginPath();
+        ctx.moveTo(subX, sleeveY);
+        ctx.lineTo(subX, sleeveY + 12);
+        ctx.strokeStyle = '#ea580c';
+        ctx.stroke();
+      }
+    }
+
+    // Thimble Movement Position
+    let thimbleX = startX + (currentValue * scaleFactor);
+
+    // Draw Thimble (Bevel + Body)
+    ctx.save();
+    
+    // Thimble Bevel Edge (Cone part)
+    ctx.beginPath();
+    ctx.moveTo(thimbleX, sleeveY - 35);
+    ctx.lineTo(thimbleX + 20, sleeveY - 45);
+    ctx.lineTo(thimbleX + 20, sleeveY + 45);
+    ctx.lineTo(thimbleX, sleeveY + 35);
+    ctx.closePath();
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fill();
+    ctx.stroke();
+
+    // Thimble Cylinder Body
+    let thimbleWidth = 100;
+    let grad = ctx.createLinearGradient(thimbleX + 20, sleeveY - 45, thimbleX + 20, sleeveY + 45);
+    grad.addColorStop(0, '#94a3b8');
+    grad.addColorStop(0.5, '#f8fafc');
+    grad.addColorStop(1, '#64748b');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(thimbleX + 20, sleeveY - 45, thimbleWidth, 90);
+    ctx.strokeRect(thimbleX + 20, sleeveY - 45, thimbleWidth, 90);
+
+    // Thimble Scale Markings (Rotational 0-50)
+    let thimbleValue = (currentValue % 0.50) * 100; // 0 to 50 divisions
+    let lineSpacing = 3.2; // Pixels between thimble divisions
+
+    for (let d = -15; d <= 15; d++) {
+      let divNum = (Math.round(thimbleValue) + d + 50) % 50;
+      let yPos = sleeveY - (d * lineSpacing);
+
+      if (yPos >= sleeveY - 32 && yPos <= sleeveY + 32) {
+        ctx.beginPath();
+        ctx.moveTo(thimbleX, yPos);
+        ctx.lineTo(thimbleX + (divNum % 5 === 0 ? 12 : 7), yPos);
+        ctx.strokeStyle = '#1e293b';
+        ctx.stroke();
+
+        if (divNum % 5 === 0) {
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '9px Arial';
+          ctx.textAlign = 'left';
+          ctx.fillText(divNum, thimbleX + 15, yPos + 3);
         }
+      }
     }
 
-    function generateRandom() {
-        let rand = (Math.random() * 24.99).toFixed(2);
-        currentValue = parseFloat(rand);
-        updateApp();
-    }
+    // Datum Line Extension Indicator (Red Alignment Line)
+    ctx.beginPath();
+    ctx.moveTo(thimbleX - 10, sleeveY);
+    ctx.lineTo(thimbleX + 10, sleeveY);
+    ctx.strokeStyle = '#dc2626';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
-    function drawMicrometer(val) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }
 
-        // 1. SLEEVE BACKGROUND
-        let sleeveGradient = ctx.createLinearGradient(0, 40, 0, 160);
-        sleeveGradient.addColorStop(0, '#cfd8dc');
-        sleeveGradient.addColorStop(0.3, '#ffffff');
-        sleeveGradient.addColorStop(0.7, '#eceff1');
-        sleeveGradient.addColorStop(1, '#b0bec5');
-
-        ctx.fillStyle = sleeveGradient;
-        ctx.strokeStyle = '#37474f';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(5, 40, 360, 120, 4);
-        ctx.fill();
-        ctx.stroke();
-
-        // 2. DATUM LINE
-        ctx.beginPath();
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
-        ctx.moveTo(5, 100);
-        ctx.lineTo(365, 100);
-        ctx.stroke();
-
-        // 3. SLEEVE TICKS (0 to 25 mm)
-        for (let i = 0; i <= 25; i++) {
-            let x = sleeveZeroX + (i * pxPerMM);
-
-            // Upper Main MM Ticks
-            ctx.beginPath();
-            ctx.strokeStyle = '#000000';
-            ctx.lineWidth = (i % 5 === 0) ? 2 : 1.2;
-            ctx.moveTo(x, 100);
-            ctx.lineTo(x, (i % 5 === 0) ? 66 : 76);
-            ctx.stroke();
-
-            // MM Numbers (0, 5, 10, 15, 20, 25)
-            if (i % 5 === 0) {
-                ctx.font = 'bold 13px Segoe UI, Arial';
-                ctx.fillStyle = '#1a202c';
-                ctx.textAlign = 'center';
-                ctx.fillText(i.toString(), x, 58);
-            }
-
-            // Lower Sub Scale Ticks (0.5 mm)
-            if (i < 25) {
-                let xSub = x + (0.5 * pxPerMM);
-                ctx.beginPath();
-                ctx.strokeStyle = '#dd6b20';
-                ctx.lineWidth = 1.2;
-                ctx.moveTo(xSub, 100);
-                ctx.lineTo(xSub, 124);
-                ctx.stroke();
-            }
-        }
-
-        // 4. THIMBLE DRAWING
-        let thimbleEdgeX = sleeveZeroX + (val * pxPerMM);
-
-        // Thimble Gradient
-        let thimbleGrad = ctx.createLinearGradient(0, 20, 0, 180);
-        thimbleGrad.addColorStop(0, '#546e7a');
-        thimbleGrad.addColorStop(0.25, '#f1f8e9');
-        thimbleGrad.addColorStop(0.5, '#ffffff');
-        thimbleGrad.addColorStop(0.75, '#cfd8dc');
-        thimbleGrad.addColorStop(1, '#37474f');
-
-        ctx.save();
-        ctx.translate(thimbleEdgeX, 0);
-
-        // Bevel Edge (Front Edge aligned at X = 0)
-        ctx.beginPath();
-        ctx.fillStyle = sleeveGradient;
-        ctx.strokeStyle = '#37474f';
-        ctx.lineWidth = 1.5;
-        ctx.moveTo(0, 20);
-        ctx.lineTo(-30, 40);
-        ctx.lineTo(-30, 160);
-        ctx.lineTo(0, 180);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-
-        // Main Thimble Body
-        ctx.beginPath();
-        ctx.fillStyle = thimbleGrad;
-        ctx.rect(0, 20, 150, 160);
-        ctx.fill();
-        ctx.stroke();
-
-        // Knurling Lines
-        ctx.strokeStyle = '#90a4ae';
-        ctx.setLineDash([3, 3]);
-        [40, 80, 120].forEach(kx => {
-            ctx.beginPath();
-            ctx.moveTo(kx, 20);
-            ctx.lineTo(kx, 180);
-            ctx.stroke();
-        });
-        ctx.setLineDash([]); // Reset dash
-
-        // Circular Scale Ticks
-        let fractional = val % 0.5;
-        let thimbleDiv = Math.round(fractional * 100);
-        if (thimbleDiv >= 50) thimbleDiv = 0;
-
-        const pixelsPerDiv = 3.2;
-
-        for (let i = -18; i <= 18; i++) {
-            let markNum = (thimbleDiv + i + 50) % 50;
-            let y = 100 - (i * pixelsPerDiv);
-
-            if (y >= 25 && y <= 175) {
-                ctx.beginPath();
-                ctx.strokeStyle = (markNum === thimbleDiv) ? '#e53e3e' : '#2d3748';
-                ctx.lineWidth = (markNum === thimbleDiv) ? 2.5 : ((markNum % 5 === 0) ? 1.8 : 1);
-                ctx.moveTo(-30, y);
-                ctx.lineTo((markNum % 5 === 0) ? 0 : -12, y);
-                ctx.stroke();
-
-                if (markNum % 5 === 0) {
-                    ctx.font = 'bold 11px Segoe UI, Arial';
-                    ctx.fillStyle = (markNum === thimbleDiv) ? '#e53e3e' : '#1a202c';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(markNum.toString(), 6, y + 4);
-                }
-            }
-        }
-
-        ctx.restore();
-    }
-
-    function updateApp() {
-        document.getElementById('micrometerSlider').value = currentValue;
-        document.getElementById('valTotal').innerText = currentValue.toFixed(2) + ' mm';
-
-        let mainMM = Math.floor(currentValue);
-        let remainder = currentValue - mainMM;
-        let subMM = remainder >= 0.5 ? 0.50 : 0.00;
-        let thimbleVal = (remainder - subMM).toFixed(2);
-
-        document.getElementById('valMain').innerText = mainMM.toFixed(2) + ' mm';
-        document.getElementById('valSub').innerText = subMM.toFixed(2) + ' mm';
-        document.getElementById('valThimble').innerText = thimbleVal + ' mm';
-        document.getElementById('valCalcFormula').innerText = `${mainMM} + ${subMM.toFixed(2)} + ${thimbleVal} = ${currentValue.toFixed(2)} mm`;
-
-        drawMicrometer(currentValue);
-    }
-
-    function adjustValue(delta) {
-        currentValue = Math.min(25.00, Math.max(0.00, currentValue + delta));
-        currentValue = Math.round(currentValue * 100) / 100;
-        updateApp();
-    }
-
-    function updateFromSlider(val) {
-        currentValue = parseFloat(val);
-        updateApp();
-    }
-
-    function resetZero() {
-        currentValue = 0.00;
-        updateApp();
-    }
-
-    // Initial Render
-    updateApp();
+  // Initial Render
+  updateReading(25.00);
 </script>
 
 </body>
