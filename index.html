@@ -7,30 +7,31 @@
   <style>
     * {
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
     body {
-      background-color: #f4f6f9;
+      background-color: #f1f5f9;
       display: flex;
       justify-content: center;
-      padding: 20px;
+      padding: 15px;
     }
     .container {
       background: #ffffff;
       max-width: 480px;
       width: 100%;
       border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
       padding: 20px;
     }
     .header {
-      background-color: #1a2b3c;
+      background-color: #0f172a;
       color: #ffffff;
-      padding: 10px 15px;
+      padding: 10px 16px;
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 13px;
+      font-weight: 500;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -42,15 +43,17 @@
     }
     .title-section h1 {
       font-size: 20px;
-      color: #1a2b3c;
+      color: #0f172a;
+      font-weight: 800;
     }
     .title-section p {
       font-size: 13px;
-      color: #7f8c8d;
+      color: #64748b;
+      margin-top: 2px;
     }
     .nav-tabs {
       display: flex;
-      background: #f0f3f6;
+      background: #f1f5f9;
       border-radius: 10px;
       padding: 4px;
       margin-bottom: 15px;
@@ -59,35 +62,36 @@
       flex: 1;
       text-align: center;
       padding: 8px;
-      font-weight: bold;
+      font-weight: 600;
       border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
-      color: #555;
+      color: #64748b;
     }
     .tab.active {
       background: #ffffff;
-      color: #1a2b3c;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .simulator-card {
       border: 1px solid #e2e8f0;
       border-radius: 12px;
-      padding: 15px;
+      padding: 10px;
       text-align: center;
-      background: #fff;
+      background: #f8fafc;
       margin-bottom: 15px;
+      overflow: hidden;
     }
     canvas {
       width: 100%;
-      height: 180px;
-      background: #ffffff;
+      height: 190px;
+      display: block;
     }
     .result-box {
-      background: #f0f7ff;
+      background: #eff6ff;
       border-left: 5px solid #2563eb;
       border-radius: 8px;
-      padding: 15px 20px;
+      padding: 12px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -95,40 +99,42 @@
     }
     .result-title {
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 700;
       color: #1e293b;
     }
     .result-value {
-      font-size: 24px;
-      font-weight: bold;
+      font-size: 26px;
+      font-weight: 800;
       color: #1d4ed8;
     }
     .btn-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 15px;
     }
     .btn {
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
-      padding: 8px 0;
-      font-weight: bold;
+      padding: 10px 0;
+      font-weight: 700;
       color: #334155;
       cursor: pointer;
-      transition: all 0.2s;
+      font-size: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
     .btn:active {
       background: #e2e8f0;
+      transform: scale(0.98);
     }
     .slider-container {
       margin-bottom: 15px;
     }
     .slider {
       width: 100%;
-      height: 6px;
-      border-radius: 3px;
+      height: 8px;
+      border-radius: 4px;
       background: #cbd5e1;
       outline: none;
       accent-color: #2563eb;
@@ -138,8 +144,8 @@
       border: 1px solid #fecaca;
       color: #dc2626;
       border-radius: 8px;
-      padding: 8px 12px;
-      font-weight: bold;
+      padding: 8px 14px;
+      font-weight: 700;
       cursor: pointer;
       display: inline-block;
       margin-bottom: 15px;
@@ -148,17 +154,14 @@
     .formula-card {
       background: #f8fafc;
       border-radius: 12px;
-      padding: 15px;
-      border: 1px solid #f1f5f9;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
     }
     .formula-title {
-      font-weight: bold;
+      font-weight: 700;
       color: #334155;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
     }
     .formula-row {
       display: flex;
@@ -170,18 +173,18 @@
     .formula-row span.label {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
     .dot-blue { color: #2563eb; }
-    .dot-orange { color: #ea580c; }
-    .dot-red { color: #dc2626; }
+    .dot-orange { color: #f97316; }
+    .dot-red { color: #ef4444; }
     .calc-sum {
       margin-top: 10px;
       padding-top: 8px;
       border-top: 1px dashed #cbd5e1;
-      font-weight: bold;
+      font-weight: 700;
       color: #1d4ed8;
-      font-size: 13px;
+      font-size: 13.5px;
     }
     .footer {
       text-align: center;
@@ -194,35 +197,29 @@
 <body>
 
 <div class="container">
-  <!-- Header -->
   <div class="header">
     ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
   </div>
 
-  <!-- Title -->
   <div class="title-section">
     <h1>આઉટસાઇડ માઇક્રોમીટર (0–25 mm)</h1>
     <p>ચોક્કસ સ્કેલ વાંચન અને પ્રાયોગિક સિમ્યુલેટર (LC: 0.01 mm)</p>
   </div>
 
-  <!-- Tabs -->
   <div class="nav-tabs">
     <div class="tab active">📘 શીખો</div>
     <div class="tab">🎯 ટેસ્ટ લેબ</div>
   </div>
 
-  <!-- Canvas Simulator Card -->
   <div class="simulator-card">
-    <canvas id="micrometerCanvas" width="400" height="180"></canvas>
+    <canvas id="micrometerCanvas"></canvas>
   </div>
 
-  <!-- Total Reading Display -->
   <div class="result-box">
     <span class="result-title">કુલ રીડિંગ:</span>
-    <span class="result-value" id="totalReading">0.00 mm</span>
+    <span class="result-value" id="totalReading">25.00 mm</span>
   </div>
 
-  <!-- Adjustment Buttons -->
   <div class="btn-grid">
     <button class="btn" onclick="adjustValue(-0.50)">-0.50</button>
     <button class="btn" onclick="adjustValue(-0.01)">-0.01</button>
@@ -230,21 +227,18 @@
     <button class="btn" onclick="adjustValue(0.50)">+0.50</button>
   </div>
 
-  <!-- Range Slider -->
   <div class="slider-container">
-    <input type="range" id="micrometerSlider" class="slider" min="0" max="25" step="0.01" value="0.00">
+    <input type="range" id="micrometerSlider" class="slider" min="0" max="25" step="0.01" value="25.00">
   </div>
 
-  <!-- Reset Button -->
   <button class="reset-btn" onclick="resetValue()">↺ 0.00 સેટ કરો</button>
 
-  <!-- Formula Breakdown -->
   <div class="formula-card">
     <div class="formula-title">📊 રીડિંગ ગણતરી (Formula):</div>
     
     <div class="formula-row">
       <span class="label"><strong class="dot-blue">■</strong> Main Scale (સ્લીવ પર છેલ્લો mm):</span>
-      <span id="msrVal">0.00 mm</span>
+      <span id="msrVal">25.00 mm</span>
     </div>
     <div class="formula-row">
       <span class="label"><strong class="dot-orange">■</strong> Sub Scale (અડધો 0.50 mm દેખાય છે?):</span>
@@ -256,7 +250,7 @@
     </div>
 
     <div class="calc-sum" id="sumFormula">
-      સરવાળો (MSR + SSR + TR): 0 + 0.00 + 0.00 = 0.00 mm
+      સરવાળો (MSR + SSR + TR): 25 + 0.00 + 0.00 = 25.00 mm
     </div>
   </div>
 
@@ -270,18 +264,24 @@
   const ctx = canvas.getContext('2d');
   const slider = document.getElementById('micrometerSlider');
 
-  let currentValue = 0.00;
+  // HD Canvas Resolution Scaling
+  const dpr = window.devicePixelRatio || 2;
+  const displayWidth = 440;
+  const displayHeight = 190;
+  canvas.width = displayWidth * dpr;
+  canvas.height = displayHeight * dpr;
+  ctx.scale(dpr, dpr);
+
+  let currentValue = 25.00;
 
   function updateReading(val) {
     currentValue = Math.min(Math.max(parseFloat(val), 0), 25);
     slider.value = currentValue.toFixed(2);
 
-    // Calculations
-    const msr = Math.floor(currentValue); // Main Scale Reading
-    const ssr = (currentValue - msr >= 0.50) ? 0.50 : 0.00; // Sub Scale
-    const thimble = parseFloat((currentValue - msr - ssr).toFixed(2)); // Thimble Division
+    const msr = Math.floor(currentValue);
+    const ssr = (currentValue - msr >= 0.50) ? 0.50 : 0.00;
+    const thimble = parseFloat((currentValue - msr - ssr).toFixed(2));
 
-    // UI Updates
     document.getElementById('totalReading').innerText = currentValue.toFixed(2) + " mm";
     document.getElementById('msrVal').innerText = msr.toFixed(2) + " mm";
     document.getElementById('ssrVal').innerText = ssr.toFixed(2) + " mm";
@@ -306,122 +306,150 @@
   });
 
   function drawMicrometer() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, displayWidth, displayHeight);
 
-    const startX = 30;
-    const sleeveY = 90;
-    const sleeveHeight = 50;
-    const scaleFactor = 9; // Pixels per mm
+    const startX = 25;
+    const sleeveY = 95;
+    const sleeveHeight = 54;
+    const scaleFactor = 8.8; // px per mm
 
-    // Sleeve Body
-    ctx.fillStyle = '#e2e8f0';
-    ctx.fillRect(startX, sleeveY - sleeveHeight/2, 250, sleeveHeight);
-    ctx.strokeStyle = '#475569';
+    // --- 1. SLEEVE (BARREL) ---
+    // Metallic Gradient
+    let sleeveGrad = ctx.createLinearGradient(0, sleeveY - sleeveHeight/2, 0, sleeveY + sleeveHeight/2);
+    sleeveGrad.addColorStop(0, '#e2e8f0');
+    sleeveGrad.addColorStop(0.2, '#ffffff');
+    sleeveGrad.addColorStop(0.8, '#cbd5e1');
+    sleeveGrad.addColorStop(1, '#94a3b8');
+
+    ctx.fillStyle = sleeveGrad;
+    ctx.fillRect(startX, sleeveY - sleeveHeight/2, 260, sleeveHeight);
+    ctx.strokeStyle = '#64748b';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(startX, sleeveY - sleeveHeight/2, 250, sleeveHeight);
+    ctx.strokeRect(startX, sleeveY - sleeveHeight/2, 260, sleeveHeight);
 
-    // Main Reference Datum Line
+    // Main Datum Line
     ctx.beginPath();
     ctx.moveTo(startX, sleeveY);
-    ctx.lineTo(startX + 250, sleeveY);
-    ctx.strokeStyle = '#334155';
-    ctx.lineWidth = 1.5;
+    ctx.lineTo(startX + 260, sleeveY);
+    ctx.strokeStyle = '#0f172a';
+    ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Draw Main Scale & Sub Scale Markings
+    // Sleeve Markings (Main Scale & Sub Scale)
     for (let i = 0; i <= 25; i++) {
       let x = startX + (i * scaleFactor);
 
-      // Main mm lines (Upper)
+      // Upper Main Scale Lines (mm)
       ctx.beginPath();
       ctx.moveTo(x, sleeveY);
-      ctx.lineTo(x, sleeveY - (i % 5 === 0 ? 18 : 12));
-      ctx.strokeStyle = '#1e293b';
+      ctx.lineTo(x, sleeveY - (i % 5 === 0 ? 20 : 13));
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = i % 5 === 0 ? 2 : 1.2;
       ctx.stroke();
 
-      // Numbers on upper scale
+      // Main Scale Text (Bold & Clear)
       if (i % 5 === 0) {
         ctx.fillStyle = '#0f172a';
-        ctx.font = '10px Arial';
+        ctx.font = 'bold 12px Arial, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(i, x, sleeveY - 22);
+        ctx.fillText(i, x, sleeveY - 24);
       }
 
-      // 0.5 mm lines (Lower - Red/Orange tint)
+      // Lower Sub Scale Lines (0.5 mm)
       if (i < 25) {
         let subX = x + (scaleFactor / 2);
         ctx.beginPath();
         ctx.moveTo(subX, sleeveY);
-        ctx.lineTo(subX, sleeveY + 12);
-        ctx.strokeStyle = '#ea580c';
+        ctx.lineTo(subX, sleeveY + 14);
+        ctx.strokeStyle = '#ea580c'; // Vibrant Orange/Red
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
     }
 
-    // Thimble Movement Position
+    // --- 2. THIMBLE ---
     let thimbleX = startX + (currentValue * scaleFactor);
 
-    // Draw Thimble (Bevel + Body)
     ctx.save();
-    
-    // Thimble Bevel Edge (Cone part)
+
+    // Beveled Edge (Front Cone)
+    let bevelGrad = ctx.createLinearGradient(0, sleeveY - 45, 0, sleeveY + 45);
+    bevelGrad.addColorStop(0, '#cbd5e1');
+    bevelGrad.addColorStop(0.3, '#f8fafc');
+    bevelGrad.addColorStop(0.8, '#94a3b8');
+    bevelGrad.addColorStop(1, '#475569');
+
     ctx.beginPath();
-    ctx.moveTo(thimbleX, sleeveY - 35);
-    ctx.lineTo(thimbleX + 20, sleeveY - 45);
-    ctx.lineTo(thimbleX + 20, sleeveY + 45);
-    ctx.lineTo(thimbleX, sleeveY + 35);
+    ctx.moveTo(thimbleX, sleeveY - 38);
+    ctx.lineTo(thimbleX + 22, sleeveY - 48);
+    ctx.lineTo(thimbleX + 22, sleeveY + 48);
+    ctx.lineTo(thimbleX, sleeveY + 38);
     ctx.closePath();
-    ctx.fillStyle = '#cbd5e1';
+    ctx.fillStyle = bevelGrad;
     ctx.fill();
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Thimble Cylinder Body
-    let thimbleWidth = 100;
-    let grad = ctx.createLinearGradient(thimbleX + 20, sleeveY - 45, thimbleX + 20, sleeveY + 45);
-    grad.addColorStop(0, '#94a3b8');
-    grad.addColorStop(0.5, '#f8fafc');
-    grad.addColorStop(1, '#64748b');
+    // Thimble Main Body
+    let bodyGrad = ctx.createLinearGradient(0, sleeveY - 48, 0, sleeveY + 48);
+    bodyGrad.addColorStop(0, '#94a3b8');
+    bodyGrad.addColorStop(0.2, '#f1f5f9');
+    bodyGrad.addColorStop(0.5, '#ffffff');
+    bodyGrad.addColorStop(0.8, '#cbd5e1');
+    bodyGrad.addColorStop(1, '#475569');
 
-    ctx.fillStyle = grad;
-    ctx.fillRect(thimbleX + 20, sleeveY - 45, thimbleWidth, 90);
-    ctx.strokeRect(thimbleX + 20, sleeveY - 45, thimbleWidth, 90);
+    ctx.fillStyle = bodyGrad;
+    ctx.fillRect(thimbleX + 22, sleeveY - 48, 120, 96);
+    ctx.strokeRect(thimbleX + 22, sleeveY - 48, 120, 96);
 
-    // Thimble Scale Markings (Rotational 0-50)
-    let thimbleValue = (currentValue % 0.50) * 100; // 0 to 50 divisions
-    let lineSpacing = 3.2; // Pixels between thimble divisions
+    // Knurling Pattern (Grip Effect on Thimble End)
+    ctx.fillStyle = '#64748b';
+    for (let k = thimbleX + 70; k < thimbleX + 135; k += 4) {
+      ctx.fillRect(k, sleeveY - 47, 1.5, 94);
+    }
 
-    for (let d = -15; d <= 15; d++) {
-      let divNum = (Math.round(thimbleValue) + d + 50) % 50;
+    // --- 3. THIMBLE CIRCULAR SCALE ---
+    let thimbleDiv = (currentValue % 0.50) * 100; // 0 to 50 divisions
+    let lineSpacing = 3.6; // Vertical px spacing
+
+    for (let d = -12; d <= 12; d++) {
+      let divNum = (Math.round(thimbleDiv) + d + 50) % 50;
       let yPos = sleeveY - (d * lineSpacing);
 
-      if (yPos >= sleeveY - 32 && yPos <= sleeveY + 32) {
+      // Render lines only inside bevel height
+      if (yPos >= sleeveY - 36 && yPos <= sleeveY + 36) {
+        let isMajor = divNum % 5 === 0;
+
         ctx.beginPath();
         ctx.moveTo(thimbleX, yPos);
-        ctx.lineTo(thimbleX + (divNum % 5 === 0 ? 12 : 7), yPos);
-        ctx.strokeStyle = '#1e293b';
+        ctx.lineTo(thimbleX + (isMajor ? 14 : 8), yPos);
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = isMajor ? 1.8 : 1.2;
         ctx.stroke();
 
-        if (divNum % 5 === 0) {
+        // High Visibility Numbers on Thimble
+        if (isMajor) {
           ctx.fillStyle = '#0f172a';
-          ctx.font = '9px Arial';
+          ctx.font = 'bold 11px Arial, sans-serif';
           ctx.textAlign = 'left';
-          ctx.fillText(divNum, thimbleX + 15, yPos + 3);
+          ctx.fillText(divNum, thimbleX + 17, yPos + 3.5);
         }
       }
     }
 
-    // Datum Line Extension Indicator (Red Alignment Line)
+    // Red Index Indicator Line (Aligned with Sleeve Datum Line)
     ctx.beginPath();
-    ctx.moveTo(thimbleX - 10, sleeveY);
-    ctx.lineTo(thimbleX + 10, sleeveY);
+    ctx.moveTo(thimbleX - 12, sleeveY);
+    ctx.lineTo(thimbleX + 8, sleeveY);
     ctx.strokeStyle = '#dc2626';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
     ctx.stroke();
 
     ctx.restore();
   }
 
-  // Initial Render
+  // Initial Draw
   updateReading(25.00);
 </script>
 
