@@ -199,10 +199,9 @@
 
             <!-- THIMBLE -->
             <g id="thimbleGroup">
-                <!-- Bevel Edge: Vertex at (0, 20) and (0, 180) -> Front Bevel Edge is at X = 0 -->
-                <polygon points="0,20 0,180 30,180 30,20" fill="url(#sleeveGrad)" opacity="0"/>
+                <!-- Bevel Edge Front is aligned at X = 0 -->
                 <polygon points="0,20 -30,40 -30,160 0,180" fill="url(#sleeveGrad)" stroke="#444d56" stroke-width="1.5"/>
-                <!-- Thimble Main Body -->
+                <!-- Thimble Body -->
                 <rect x="0" y="20" width="150" height="160" fill="url(#thimbleGrad)" stroke="#444d56" stroke-width="2"/>
                 
                 <!-- Knurling Texture -->
@@ -219,7 +218,7 @@
     <!-- READING DISPLAY -->
     <div class="result-box">
         <span class="result-title">કુલ રીડિંગ:</span>
-        <span class="result-val" id="valTotal">11.92 mm</span>
+        <span class="result-val" id="valTotal">16.35 mm</span>
     </div>
 
     <!-- ACTION BUTTONS -->
@@ -232,7 +231,7 @@
 
     <!-- SLIDER -->
     <div class="slider-container">
-        <input type="range" id="micrometerSlider" class="range-slider" min="0" max="25" step="0.01" value="11.92" oninput="updateFromSlider(this.value)">
+        <input type="range" id="micrometerSlider" class="range-slider" min="0" max="25" step="0.01" value="16.35" oninput="updateFromSlider(this.value)">
     </div>
     
     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -245,19 +244,19 @@
         <div style="font-weight: 700; color: #2d3748; margin-bottom: 8px;">📊 રીડિંગ ગણતરી (Formula):</div>
         <div class="calc-row">
             <span><span class="dot-blue">■</span> Main Scale (સ્લીવ પર છેલ્લો mm):</span>
-            <span id="valMain">11.00 mm</span>
+            <span id="valMain">16.00 mm</span>
         </div>
         <div class="calc-row">
             <span><span class="dot-orange">■</span> Sub Scale (અડધો 0.50 mm દેખાય છે?):</span>
-            <span id="valSub">0.50 mm</span>
+            <span id="valSub">0.00 mm</span>
         </div>
         <div class="calc-row">
             <span><span class="dot-red">■</span> Thimble Scale (ડિવિઝન × 0.01 mm):</span>
-            <span id="valThimble">0.42 mm</span>
+            <span id="valThimble">0.35 mm</span>
         </div>
         <div class="calc-row" style="color: #2b6cb0; font-size: 14px;">
             <span>સરવાળો (MSR + SSR + TR):</span>
-            <span id="valCalcFormula">11 + 0.50 + 0.42 = 11.92 mm</span>
+            <span id="valCalcFormula">16 + 0.00 + 0.35 = 16.35 mm</span>
         </div>
     </div>
 
@@ -267,12 +266,12 @@
 </div>
 
 <script>
-    let currentValue = 11.92;
+    let currentValue = 16.35;
     let mode = 'learn';
 
-    // Absolute Scale Metrics: 1mm = 11 SVG Pixels
+    // Fixed Pixel Ratio: 1mm = 11 SVG Pixels
     const pxPerMM = 11;
-    const sleeveZeroX = 30; // Exact X coordinate where 0 mm mark is drawn
+    const sleeveZeroX = 30; // 0mm point on sleeve
 
     function setMode(m) {
         mode = m;
@@ -299,11 +298,11 @@
         const sleeveGroup = document.getElementById('sleeveTicks');
         sleeveGroup.innerHTML = '';
 
-        // Draw Full Sleeve Marks 0 to 25 mm
+        // Render Main Scale 0 to 25 mm
         for (let i = 0; i <= 25; i++) {
             let x = sleeveZeroX + (i * pxPerMM);
 
-            // Upper Main Scale Ticks (1.0 mm)
+            // Main MM Ticks (Top)
             let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             line.setAttribute('x1', x);
             line.setAttribute('y1', 100);
@@ -313,7 +312,7 @@
             line.setAttribute('stroke-width', i % 5 === 0 ? '2' : '1.2');
             sleeveGroup.appendChild(line);
 
-            // Numbers at 0, 5, 10, 15, 20, 25
+            // Number Labels
             if (i % 5 === 0) {
                 let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', x);
@@ -326,7 +325,7 @@
                 sleeveGroup.appendChild(text);
             }
 
-            // Lower Sub Scale Ticks (0.5 mm)
+            // Sub Scale Ticks (Bottom - 0.5mm)
             if (i < 25) {
                 let xSub = x + (0.5 * pxPerMM);
                 let lineSub = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -346,11 +345,11 @@
         const thimbleTicks = document.getElementById('thimbleTicks');
         thimbleTicks.innerHTML = '';
 
-        // Position Thimble Edge exactly at Sleeve 0mm + (val * pxPerMM)
+        // Position Thimble Bevel Edge exactly at Sleeve 0mm + (val * pxPerMM)
         let thimbleEdgeX = sleeveZeroX + (val * pxPerMM);
         thimbleGroup.setAttribute('transform', `translate(${thimbleEdgeX}, 0)`);
 
-        // Thimble rotation value calculation (0 to 49)
+        // Exact Division Logic
         let fractional = val % 0.5;
         let thimbleDiv = Math.round(fractional * 100);
         if (thimbleDiv >= 50) thimbleDiv = 0;
