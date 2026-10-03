@@ -76,7 +76,7 @@
 
         .svg-card {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cbd5e0;
             border-radius: 12px;
             padding: 10px;
             text-align: center;
@@ -171,50 +171,48 @@
 
     <!-- SVG MICROMETER GRAPHICS -->
     <div class="svg-card">
-        <svg id="microSVG" viewBox="0 0 550 200" width="100%" height="auto">
+        <svg id="microSVG" viewBox="0 0 520 200" width="100%" height="auto">
             <defs>
                 <linearGradient id="sleeveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#cbd5e0"/>
+                    <stop offset="0%" stop-color="#d0d7de"/>
                     <stop offset="30%" stop-color="#ffffff"/>
-                    <stop offset="70%" stop-color="#e2e8f0"/>
-                    <stop offset="100%" stop-color="#a0aec0"/>
+                    <stop offset="70%" stop-color="#e1e4e8"/>
+                    <stop offset="100%" stop-color="#b0b7be"/>
                 </linearGradient>
                 <linearGradient id="thimbleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#718096"/>
-                    <stop offset="20%" stop-color="#edf2f7"/>
+                    <stop offset="0%" stop-color="#6a737d"/>
+                    <stop offset="25%" stop-color="#f6f8fa"/>
                     <stop offset="50%" stop-color="#ffffff"/>
-                    <stop offset="80%" stop-color="#cbd5e0"/>
-                    <stop offset="100%" stop-color="#4a5568"/>
+                    <stop offset="75%" stop-color="#d1d5da"/>
+                    <stop offset="100%" stop-color="#444d56"/>
                 </linearGradient>
             </defs>
 
             <!-- SLEEVE / BARREL -->
-            <rect x="20" y="40" width="380" height="120" fill="url(#sleeveGrad)" stroke="#4a5568" stroke-width="2" rx="3"/>
+            <rect x="10" y="40" width="360" height="120" fill="url(#sleeveGrad)" stroke="#444d56" stroke-width="2" rx="3"/>
             
             <!-- Datum Line -->
-            <line x1="20" y1="100" x2="400" y2="100" stroke="#000000" stroke-width="2"/>
+            <line x1="10" y1="100" x2="370" y2="100" stroke="#000000" stroke-width="2"/>
 
             <!-- Dynamic Markings inserted via JS -->
             <g id="sleeveTicks"></g>
 
             <!-- THIMBLE -->
             <g id="thimbleGroup">
-                <!-- Bevel Edge -->
-                <polygon points="0,20 -30,40 -30,160 0,180" fill="url(#sleeveGrad)" stroke="#4a5568" stroke-width="1.5"/>
+                <!-- Bevel Edge: Vertex at (0, 20) and (0, 180) -> Front Bevel Edge is at X = 0 -->
+                <polygon points="0,20 0,180 30,180 30,20" fill="url(#sleeveGrad)" opacity="0"/>
+                <polygon points="0,20 -30,40 -30,160 0,180" fill="url(#sleeveGrad)" stroke="#444d56" stroke-width="1.5"/>
                 <!-- Thimble Main Body -->
-                <rect x="0" y="20" width="160" height="160" fill="url(#thimbleGrad)" stroke="#4a5568" stroke-width="2"/>
+                <rect x="0" y="20" width="150" height="160" fill="url(#thimbleGrad)" stroke="#444d56" stroke-width="2"/>
                 
                 <!-- Knurling Texture -->
-                <line x1="40" y1="20" x2="40" y2="180" stroke="#a0aec0" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <line x1="80" y1="20" x2="80" y2="180" stroke="#a0aec0" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <line x1="120" y1="20" x2="120" y2="180" stroke="#a0aec0" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <line x1="40" y1="20" x2="40" y2="180" stroke="#959da5" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <line x1="80" y1="20" x2="80" y2="180" stroke="#959da5" stroke-width="1.5" stroke-dasharray="3 3"/>
+                <line x1="120" y1="20" x2="120" y2="180" stroke="#959da5" stroke-width="1.5" stroke-dasharray="3 3"/>
 
                 <!-- Circular Scale Ticks -->
                 <g id="thimbleTicks"></g>
             </g>
-
-            <!-- Red Datum Pointer -->
-            <polygon points="20,100 10,95 10,105" fill="#e53e3e"/>
         </svg>
     </div>
 
@@ -272,9 +270,9 @@
     let currentValue = 11.92;
     let mode = 'learn';
 
-    // Scale Metrics: 1mm = 10 pixels
-    const pxPerMM = 10;
-    const sleeveZeroX = 60; // 0 mm marking position X
+    // Absolute Scale Metrics: 1mm = 11 SVG Pixels
+    const pxPerMM = 11;
+    const sleeveZeroX = 30; // Exact X coordinate where 0 mm mark is drawn
 
     function setMode(m) {
         mode = m;
@@ -310,7 +308,7 @@
             line.setAttribute('x1', x);
             line.setAttribute('y1', 100);
             line.setAttribute('x2', x);
-            line.setAttribute('y2', i % 5 === 0 ? 65 : 75);
+            line.setAttribute('y2', i % 5 === 0 ? 68 : 78);
             line.setAttribute('stroke', '#000000');
             line.setAttribute('stroke-width', i % 5 === 0 ? '2' : '1.2');
             sleeveGroup.appendChild(line);
@@ -319,7 +317,7 @@
             if (i % 5 === 0) {
                 let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 text.setAttribute('x', x);
-                text.setAttribute('y', 57);
+                text.setAttribute('y', 60);
                 text.setAttribute('font-size', '13');
                 text.setAttribute('font-weight', 'bold');
                 text.setAttribute('fill', '#1a202c');
@@ -335,7 +333,7 @@
                 lineSub.setAttribute('x1', xSub);
                 lineSub.setAttribute('y1', 100);
                 lineSub.setAttribute('x2', xSub);
-                lineSub.setAttribute('y2', 125);
+                lineSub.setAttribute('y2', 122);
                 lineSub.setAttribute('stroke', '#dd6b20');
                 lineSub.setAttribute('stroke-width', '1.2');
                 sleeveGroup.appendChild(lineSub);
@@ -348,7 +346,7 @@
         const thimbleTicks = document.getElementById('thimbleTicks');
         thimbleTicks.innerHTML = '';
 
-        // Position Thimble Edge exactly at val * pxPerMM
+        // Position Thimble Edge exactly at Sleeve 0mm + (val * pxPerMM)
         let thimbleEdgeX = sleeveZeroX + (val * pxPerMM);
         thimbleGroup.setAttribute('transform', `translate(${thimbleEdgeX}, 0)`);
 
@@ -357,7 +355,7 @@
         let thimbleDiv = Math.round(fractional * 100);
         if (thimbleDiv >= 50) thimbleDiv = 0;
 
-        const pixelsPerDiv = 2.8;
+        const pixelsPerDiv = 3.0;
 
         for (let i = -18; i <= 18; i++) {
             let markNum = (thimbleDiv + i + 50) % 50;
@@ -375,7 +373,7 @@
 
                 if (markNum % 5 === 0) {
                     let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    text.setAttribute('x', 10);
+                    text.setAttribute('x', 8);
                     text.setAttribute('y', y + 4);
                     text.setAttribute('font-size', '11');
                     text.setAttribute('font-weight', 'bold');
