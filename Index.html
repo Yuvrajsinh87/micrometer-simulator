@@ -16,7 +16,7 @@
         .container {
             background: #ffffff;
             border-radius: 16px;
-            max-width: 520px;
+            max-width: 500px;
             width: 100%;
             padding: 18px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.08);
@@ -74,13 +74,19 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.08);
         }
 
-        .svg-card {
+        .canvas-card {
             background: #ffffff;
             border: 1px solid #cbd5e0;
             border-radius: 12px;
             padding: 8px;
             text-align: center;
-            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            display: block;
         }
 
         .result-box {
@@ -156,7 +162,6 @@
 
 <div class="container">
     
-    <!-- AUTHOR CREDITS BANNER -->
     <div class="author-badge">
         ⚙️ Created by: Yuvrajsinh Kosamia | ITI Ankleshwar
     </div>
@@ -169,56 +174,15 @@
         <button class="tab-btn" id="btnTest" onclick="setMode('test')">🎯 ટેસ્ટ લેબ</button>
     </div>
 
-    <!-- SVG MICROMETER GRAPHICS -->
-    <div class="svg-card">
-        <svg id="microSVG" viewBox="0 0 550 200" width="100%" height="auto">
-            <defs>
-                <linearGradient id="sleeveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#cfd8dc"/>
-                    <stop offset="30%" stop-color="#ffffff"/>
-                    <stop offset="70%" stop-color="#eceff1"/>
-                    <stop offset="100%" stop-color="#b0bec5"/>
-                </linearGradient>
-                <linearGradient id="thimbleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#546e7a"/>
-                    <stop offset="25%" stop-color="#f1f8e9"/>
-                    <stop offset="50%" stop-color="#ffffff"/>
-                    <stop offset="75%" stop-color="#cfd8dc"/>
-                    <stop offset="100%" stop-color="#37474f"/>
-                </linearGradient>
-            </defs>
-
-            <!-- SLEEVE / BARREL -->
-            <rect x="0" y="40" width="380" height="120" fill="url(#sleeveGrad)" stroke="#37474f" stroke-width="2" rx="3"/>
-            
-            <!-- Datum Line -->
-            <line x1="0" y1="100" x2="380" y2="100" stroke="#000000" stroke-width="2"/>
-
-            <!-- Sleeve Markings -->
-            <g id="sleeveTicks"></g>
-
-            <!-- THIMBLE GROUP -->
-            <g id="thimbleGroup">
-                <!-- Bevel Edge -->
-                <polygon points="0,20 -35,40 -35,160 0,180" fill="url(#sleeveGrad)" stroke="#37474f" stroke-width="1.5"/>
-                <!-- Main Body -->
-                <rect x="0" y="20" width="160" height="160" fill="url(#thimbleGrad)" stroke="#37474f" stroke-width="2"/>
-                
-                <!-- Knurling Lines -->
-                <line x1="40" y1="20" x2="40" y2="180" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <line x1="80" y1="20" x2="80" y2="180" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="3 3"/>
-                <line x1="120" y1="20" x2="120" y2="180" stroke="#90a4ae" stroke-width="1.5" stroke-dasharray="3 3"/>
-
-                <!-- Thimble Ticks -->
-                <g id="thimbleTicks"></g>
-            </g>
-        </svg>
+    <!-- HIGH PRECISION CANVAS CANVAS -->
+    <div class="canvas-card">
+        <canvas id="micrometerCanvas" width="550" height="200"></canvas>
     </div>
 
     <!-- READING DISPLAY -->
     <div class="result-box">
         <span class="result-title">કુલ રીડિંગ:</span>
-        <span class="result-val" id="valTotal">16.35 mm</span>
+        <span class="result-val" id="valTotal">25.00 mm</span>
     </div>
 
     <!-- ACTION BUTTONS -->
@@ -231,7 +195,7 @@
 
     <!-- SLIDER -->
     <div class="slider-container">
-        <input type="range" id="micrometerSlider" class="range-slider" min="0" max="25" step="0.01" value="16.35" oninput="updateFromSlider(this.value)">
+        <input type="range" id="micrometerSlider" class="range-slider" min="0" max="25" step="0.01" value="25.00" oninput="updateFromSlider(this.value)">
     </div>
     
     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
@@ -244,7 +208,7 @@
         <div style="font-weight: 700; color: #2d3748; margin-bottom: 8px;">📊 રીડિંગ ગણતરી (Formula):</div>
         <div class="calc-row">
             <span><span class="dot-blue">■</span> Main Scale (સ્લીવ પર છેલ્લો mm):</span>
-            <span id="valMain">16.00 mm</span>
+            <span id="valMain">25.00 mm</span>
         </div>
         <div class="calc-row">
             <span><span class="dot-orange">■</span> Sub Scale (અડધો 0.50 mm દેખાય છે?):</span>
@@ -252,11 +216,11 @@
         </div>
         <div class="calc-row">
             <span><span class="dot-red">■</span> Thimble Scale (ડિવિઝન × 0.01 mm):</span>
-            <span id="valThimble">0.35 mm</span>
+            <span id="valThimble">0.00 mm</span>
         </div>
         <div class="calc-row" style="color: #2b6cb0; font-size: 14px;">
             <span>સરવાળો (MSR + SSR + TR):</span>
-            <span id="valCalcFormula">16 + 0.00 + 0.35 = 16.35 mm</span>
+            <span id="valCalcFormula">25 + 0.00 + 0.00 = 25.00 mm</span>
         </div>
     </div>
 
@@ -266,12 +230,14 @@
 </div>
 
 <script>
-    let currentValue = 16.35;
+    let currentValue = 25.00;
     let mode = 'learn';
 
-    // Exact Pixel Mapping
+    const canvas = document.getElementById('micrometerCanvas');
+    const ctx = canvas.getContext('2d');
+
     const pxPerMM = 12;      // 1 mm = 12 pixels
-    const sleeveZeroX = 40;  // Sleeve 0 mm tick is strictly at X = 40
+    const sleeveZeroX = 35;  // X coordinate of 0 mm mark
 
     function setMode(m) {
         mode = m;
@@ -294,62 +260,110 @@
         updateApp();
     }
 
-    function drawSleeveScale() {
-        const sleeveGroup = document.getElementById('sleeveTicks');
-        sleeveGroup.innerHTML = '';
+    function drawMicrometer(val) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Ticks for 0 to 25 mm
+        // 1. SLEEVE BACKGROUND
+        let sleeveGradient = ctx.createLinearGradient(0, 40, 0, 160);
+        sleeveGradient.addColorStop(0, '#cfd8dc');
+        sleeveGradient.addColorStop(0.3, '#ffffff');
+        sleeveGradient.addColorStop(0.7, '#eceff1');
+        sleeveGradient.addColorStop(1, '#b0bec5');
+
+        ctx.fillStyle = sleeveGradient;
+        ctx.strokeStyle = '#37474f';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(5, 40, 360, 120, 4);
+        ctx.fill();
+        ctx.stroke();
+
+        // 2. DATUM LINE
+        ctx.beginPath();
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.moveTo(5, 100);
+        ctx.lineTo(365, 100);
+        ctx.stroke();
+
+        // 3. SLEEVE TICKS (0 to 25 mm)
         for (let i = 0; i <= 25; i++) {
             let x = sleeveZeroX + (i * pxPerMM);
 
-            // Upper Main MM Line
-            let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', x);
-            line.setAttribute('y1', 100);
-            line.setAttribute('x2', x);
-            line.setAttribute('y2', i % 5 === 0 ? 68 : 78);
-            line.setAttribute('stroke', '#000000');
-            line.setAttribute('stroke-width', i % 5 === 0 ? '2' : '1.2');
-            sleeveGroup.appendChild(line);
+            // Upper Main MM Ticks
+            ctx.beginPath();
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = (i % 5 === 0) ? 2 : 1.2;
+            ctx.moveTo(x, 100);
+            ctx.lineTo(x, (i % 5 === 0) ? 66 : 76);
+            ctx.stroke();
 
-            // MM Number Label
+            // MM Numbers (0, 5, 10, 15, 20, 25)
             if (i % 5 === 0) {
-                let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', x);
-                text.setAttribute('y', 60);
-                text.setAttribute('font-size', '13');
-                text.setAttribute('font-weight', 'bold');
-                text.setAttribute('fill', '#1a202c');
-                text.setAttribute('text-anchor', 'middle');
-                text.textContent = i;
-                sleeveGroup.appendChild(text);
+                ctx.font = 'bold 13px Segoe UI, Arial';
+                ctx.fillStyle = '#1a202c';
+                ctx.textAlign = 'center';
+                ctx.fillText(i.toString(), x, 58);
             }
 
-            // Lower Sub Scale Line (0.5 mm)
+            // Lower Sub Scale Ticks (0.5 mm)
             if (i < 25) {
                 let xSub = x + (0.5 * pxPerMM);
-                let lineSub = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                lineSub.setAttribute('x1', xSub);
-                lineSub.setAttribute('y1', 100);
-                lineSub.setAttribute('x2', xSub);
-                lineSub.setAttribute('y2', 122);
-                lineSub.setAttribute('stroke', '#dd6b20');
-                lineSub.setAttribute('stroke-width', '1.2');
-                sleeveGroup.appendChild(lineSub);
+                ctx.beginPath();
+                ctx.strokeStyle = '#dd6b20';
+                ctx.lineWidth = 1.2;
+                ctx.moveTo(xSub, 100);
+                ctx.lineTo(xSub, 124);
+                ctx.stroke();
             }
         }
-    }
 
-    function drawThimbleScale(val) {
-        const thimbleGroup = document.getElementById('thimbleGroup');
-        const thimbleTicks = document.getElementById('thimbleTicks');
-        thimbleTicks.innerHTML = '';
-
-        // Move Thimble Edge to Zero Point + (val * pxPerMM)
+        // 4. THIMBLE DRAWING
         let thimbleEdgeX = sleeveZeroX + (val * pxPerMM);
-        thimbleGroup.setAttribute('transform', `translate(${thimbleEdgeX}, 0)`);
 
-        // Circular division (0 to 49)
+        // Thimble Gradient
+        let thimbleGrad = ctx.createLinearGradient(0, 20, 0, 180);
+        thimbleGrad.addColorStop(0, '#546e7a');
+        thimbleGrad.addColorStop(0.25, '#f1f8e9');
+        thimbleGrad.addColorStop(0.5, '#ffffff');
+        thimbleGrad.addColorStop(0.75, '#cfd8dc');
+        thimbleGrad.addColorStop(1, '#37474f');
+
+        ctx.save();
+        ctx.translate(thimbleEdgeX, 0);
+
+        // Bevel Edge (Front Edge aligned at X = 0)
+        ctx.beginPath();
+        ctx.fillStyle = sleeveGradient;
+        ctx.strokeStyle = '#37474f';
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(0, 20);
+        ctx.lineTo(-30, 40);
+        ctx.lineTo(-30, 160);
+        ctx.lineTo(0, 180);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        // Main Thimble Body
+        ctx.beginPath();
+        ctx.fillStyle = thimbleGrad;
+        ctx.rect(0, 20, 150, 160);
+        ctx.fill();
+        ctx.stroke();
+
+        // Knurling Lines
+        ctx.strokeStyle = '#90a4ae';
+        ctx.setLineDash([3, 3]);
+        [40, 80, 120].forEach(kx => {
+            ctx.beginPath();
+            ctx.moveTo(kx, 20);
+            ctx.lineTo(kx, 180);
+            ctx.stroke();
+        });
+        ctx.setLineDash([]); // Reset dash
+
+        // Circular Scale Ticks
         let fractional = val % 0.5;
         let thimbleDiv = Math.round(fractional * 100);
         if (thimbleDiv >= 50) thimbleDiv = 0;
@@ -361,27 +375,23 @@
             let y = 100 - (i * pixelsPerDiv);
 
             if (y >= 25 && y <= 175) {
-                let line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                line.setAttribute('x1', -35);
-                line.setAttribute('y1', y);
-                line.setAttribute('x2', markNum % 5 === 0 ? 0 : -12);
-                line.setAttribute('y2', y);
-                line.setAttribute('stroke', markNum === thimbleDiv ? '#e53e3e' : '#2d3748');
-                line.setAttribute('stroke-width', markNum === thimbleDiv ? '2.5' : (markNum % 5 === 0 ? '1.8' : '1'));
-                thimbleTicks.appendChild(line);
+                ctx.beginPath();
+                ctx.strokeStyle = (markNum === thimbleDiv) ? '#e53e3e' : '#2d3748';
+                ctx.lineWidth = (markNum === thimbleDiv) ? 2.5 : ((markNum % 5 === 0) ? 1.8 : 1);
+                ctx.moveTo(-30, y);
+                ctx.lineTo((markNum % 5 === 0) ? 0 : -12, y);
+                ctx.stroke();
 
                 if (markNum % 5 === 0) {
-                    let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                    text.setAttribute('x', 10);
-                    text.setAttribute('y', y + 4);
-                    text.setAttribute('font-size', '11');
-                    text.setAttribute('font-weight', 'bold');
-                    text.setAttribute('fill', markNum === thimbleDiv ? '#e53e3e' : '#1a202c');
-                    text.textContent = markNum;
-                    thimbleTicks.appendChild(text);
+                    ctx.font = 'bold 11px Segoe UI, Arial';
+                    ctx.fillStyle = (markNum === thimbleDiv) ? '#e53e3e' : '#1a202c';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(markNum.toString(), 6, y + 4);
                 }
             }
         }
+
+        ctx.restore();
     }
 
     function updateApp() {
@@ -398,8 +408,7 @@
         document.getElementById('valThimble').innerText = thimbleVal + ' mm';
         document.getElementById('valCalcFormula').innerText = `${mainMM} + ${subMM.toFixed(2)} + ${thimbleVal} = ${currentValue.toFixed(2)} mm`;
 
-        drawSleeveScale();
-        drawThimbleScale(currentValue);
+        drawMicrometer(currentValue);
     }
 
     function adjustValue(delta) {
@@ -418,7 +427,7 @@
         updateApp();
     }
 
-    // Initial Load
+    // Initial Render
     updateApp();
 </script>
 
